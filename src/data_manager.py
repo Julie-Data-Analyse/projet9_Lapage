@@ -58,6 +58,9 @@ def inspection (df) :
         print("Aucune colonne ne peut constituer une clé primaire en l'état.")
 
 # ----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
 import pandas as pd
 def verification_df (df, col1, col2):
@@ -72,5 +75,11 @@ def verification_df (df, col1, col2):
         return
 print('ok, étape suivante')
 
+# ----------------------------------------------------------------------------------------
+# from scipy.stats import norm
 # from scipy.stats import pearsonr
+# from scipy.stats import spearmanr
 # def correlation_quanti_quanti(df, col1, col2) :
+#     # calcul de la moyenne de l'écart type
+#     col1=df['col1'].
+#     st.pearsonr(df['col1'],-df['col2'][0])
