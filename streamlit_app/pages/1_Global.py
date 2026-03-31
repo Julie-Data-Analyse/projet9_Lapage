@@ -12,17 +12,30 @@ from pathlib import Path
 
 def load_data():
     base_path = Path(__file__).resolve().parents[2]
-    file_path = base_path / "data" / "processed" / "df_b2c.csv"
+    file_path = base_path / "data" / "processed" / "df_lapage.csv"
     df = pd.read_csv(file_path, sep=';')
     df['date'] = pd.to_datetime(df['date'])
     return df
 
 df = load_data()
 
+st.container(width="content")
+
+
+# # ============================================
+# # COULEURS
+# # ============================================
+
+palette = {
+    "0": "#e95c6d",
+    "1": "#2f3a4a",
+    "2": "#ffa600"
+}
+
 # # ============================================
 # # HEADER
 # # ============================================
-st.set_page_config(page_title="Global")
+st.set_page_config(page_title="Global", layout="wide")
 st.sidebar.header("Global")
 
 KPI1, KPI2, KPI3, KPI4 = st.columns(4)
@@ -111,6 +124,43 @@ fig = px.line(
     markers=True
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width='stretch')
+
+# # ============================================
+# # SECTION 3 - GRAPHIQUE CA avec moyennes glissantes
+# # ============================================
+
+# Grahique concernant la saisonnalité du CA. 
+# Pas de réelle saisonnalité : pics principalement sur 4 jours : entre jeudi et dimanche
+# Interprétation limitée et tendance à une certaine stabilité - saisonnalité marquée mais pas de pics
+
+df_ca = df.groupby(pd.Grouper(key='date', freq='W'))['price'].sum().to_frame().reset_index()
+
+df_ca['Moyenne glissante (mois)']=df_ca['price'].rolling(window=30).mean().round(2)
+
+# df_ca['Moyenne glissante (mois)']=df_ca['price'].rolling(window=30).mean().round(2)
 
 
+figure = px.line(
+    df_ca, 
+    x='date', 
+    y=['price', 'Moyenne glissante (mois)'], 
+    color_discrete_sequence=list(palette.values()),
+    markers=False,
+    title='Évolution du chiffre d\'affaires',
+    labels={
+        'date': 'Mois',
+        'value': 'Chiffre d’affaires (€)',
+        'variable': 'Moyennes glissantes',
+        'price':'CA hebdomadaire'
+    }
+)
+figure.update_layout(
+    template='plotly_white',
+    hovermode='x unified',
+    width=1050,
+    height=500
+)
+figure.update_traces(hovertemplate='%{y:.0f}€')
+
+st.plotly_chart(figure, width='stretch')

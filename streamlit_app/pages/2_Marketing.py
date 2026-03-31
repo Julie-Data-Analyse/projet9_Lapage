@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
+from pathlib import Path
 
 
 # # ============================================
@@ -11,16 +11,28 @@ import plotly.express as px
 @st.cache_data 
 
 def load_data():
-    df = pd.read_csv(r'data/processed/df_b2c.csv',sep=';')
+    base_path = Path(__file__).resolve().parents[2]
+    file_path = base_path / "data" / "processed" / "df_lapage.csv"  
+    df = pd.read_csv(file_path, sep=';')  
     df['date'] = pd.to_datetime(df['date'])
     return df
 
 df = load_data()
 
 # # ============================================
+# # COULEURS
+# # ============================================
+
+palette = {
+    "0": "#e95c6d",
+    "1": "#2f3a4a",
+    "2": "#ffa600"
+}
+
+# # ============================================
 # # HEADER
 # # ============================================
-st.set_page_config(page_title="Marketing")
+st.set_page_config(page_title="Marketing", layout="wide")
 st.sidebar.header("Marketing")
 
 KPI1, KPI2, KPI3, KPI4 = st.columns(4)
@@ -66,6 +78,10 @@ if isinstance(periode, tuple) and len(periode) == 2:
 if selected_categ != "Toutes":
     df_filtered = df_filtered[df_filtered['categ'] == int(selected_categ)]
 
+# Filtre segments B2B et B2C
+if selected_segment != "Toutes":
+    df_filtered = df_filtered[df_filtered['categ'] == int(selected_categ)]
+
 # # ============================================
 # # SECTION 1 - KPIs
 # # ============================================
@@ -105,7 +121,7 @@ fig = px.line(
     markers=True
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="content")
 
 
 # # ============================================
@@ -117,4 +133,4 @@ if selected_categ == "Toutes":
     st.header("Répartition par Catégorie")
     df_pie = df.groupby('categ')['price'].sum().reset_index()
     fig_pie = px.pie(df_pie, values='price', names='categ', title="Part du CA par catégorie")
-    st.plotly_chart(fig_pie, use_container_width="Stretch")
+    st.plotly_chart(fig_pie, width="Stretch")

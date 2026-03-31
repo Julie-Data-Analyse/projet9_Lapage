@@ -2,8 +2,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-st.set_page_config(
-    page_title="Accueil")
+st.set_page_config(page_title="Accueil", layout="wide")
+
+# # ============================================
+# # COULEURS
+# # ============================================
+
+palette = {
+    "0": "#e95c6d",
+    "1": "#2f3a4a",
+    "2": "#ffa600"
+}
 
 # # ============================================
 # # HEADER
