@@ -32,7 +32,7 @@ palette = {
 # # ============================================
 # # HEADER
 # # ============================================
-st.set_page_config(page_title="Business Analyse", layout="wide")
+st.set_page_config(page_title=":material/symbols-outlined menu_book: Business Analyse", layout="wide")
 st.sidebar.header("Business Analyse")
 
 st.title("Dashboard Lapage")
