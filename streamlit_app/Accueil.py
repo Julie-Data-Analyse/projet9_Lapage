@@ -19,8 +19,6 @@ def load_data():
 
 df = load_data()
 
-st.container(width="content")
-
 
 # # ============================================
 # # COULEURS
@@ -40,7 +38,7 @@ st.sidebar.header("Global")
 
 KPI1, KPI2, KPI3, KPI4 = st.columns(4)
 
-st.title("Dashboard Lapage")
+st.title(":material/menu_book: Dashboard Lapage")
 st.markdown("Analyse des ventes de la Librairie Lapage")
 
 # # ============================================
@@ -130,9 +128,6 @@ st.plotly_chart(fig, width='stretch')
 # # SECTION 3 - GRAPHIQUE CA avec moyennes glissantes
 # # ============================================
 
-# Grahique concernant la saisonnalité du CA. 
-# Pas de réelle saisonnalité : pics principalement sur 4 jours : entre jeudi et dimanche
-# Interprétation limitée et tendance à une certaine stabilité - saisonnalité marquée mais pas de pics
 
 df_ca = df.groupby(pd.Grouper(key='date', freq='W'))['price'].sum().to_frame().reset_index()
 

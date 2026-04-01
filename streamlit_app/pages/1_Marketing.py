@@ -37,7 +37,7 @@ st.sidebar.header("Marketing")
 
 KPI1, KPI2, KPI3, KPI4 = st.columns(4)
 
-st.title("Dashboard Lapage")
+st.title(":material/menu_book: Dashboard Lapage")
 st.markdown("Analyse des ventes de la Librairie Lapage")
 
 # # ============================================
