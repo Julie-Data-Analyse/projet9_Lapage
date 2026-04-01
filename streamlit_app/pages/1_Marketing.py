@@ -79,8 +79,8 @@ if selected_categ != "Toutes":
     df_filtered = df_filtered[df_filtered['categ'] == int(selected_categ)]
 
 # Filtre segments B2B et B2C
-if selected_segment != "Toutes":
-    df_filtered = df_filtered[df_filtered['categ'] == int(selected_categ)]
+# if selected_segment != "Toutes":
+#     df_filtered = df_filtered[df_filtered['categ'] == int(selected_categ)]
 
 # # ============================================
 # # SECTION 1 - KPIs
